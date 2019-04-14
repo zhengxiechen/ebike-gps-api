@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Map, GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react';
+import MockApi from './api/__mocks__/mock_api.js';
 require('dotenv').config();
 
 const API_KEY = process.env.REACT_APP_API_KEY;
+const api = new MockApi();
 
 const mapStyles = {
   width: '100%',
@@ -39,8 +41,8 @@ export class MapContainer extends Component {
         zoom={18}
         style={mapStyles}
         initialCenter={{
-         lat: 38.990794,
-         lng: -76.936972
+         lat: api.getData().lat,
+         lng: api.getData().lng
         }}
       >
         <Marker
