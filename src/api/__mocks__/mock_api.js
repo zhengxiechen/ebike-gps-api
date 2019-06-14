@@ -1,8 +1,8 @@
 export class MockApi {
     constructor(){
         this.data = {
-            "lng": "-76.936972",
-            "lat": "38.990794",
+            "long": "-76.936972",
+            "lati": "38.990794",
             "alt": "12.830212",
             "cour": "course",
             "spd": "5.2",

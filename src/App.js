@@ -1,68 +1,58 @@
 import React, { Component } from 'react';
-import { Map, GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react';
 import MockApi from './api/__mocks__/mock_api.js';
+import GPSApi from './api/gps_api.js';
+import Maps from './MapContainer';
+
 require('dotenv').config();
-
 const API_KEY = process.env.REACT_APP_API_KEY;
-const api = new MockApi();
+//const api = new MockApi();
+const api = new GPSApi();
 
-const mapStyles = {
-  width: '100%',
-  height: '100%'
-};
-
-export class MapContainer extends Component {
+class App extends Component {
   state = {
-    showingInfoWindow: false,  //Hides or the shows the infoWindow
-    activeMarker: {},          //Shows the active marker upon click
-    selectedPlace: {}          //Shows the infoWindow to the selected place upon a marker
+    data: { lati: 38.990794, long: -76.936972 },
+    center: { lat: 38.990794, lng: -76.936972 },
   };
 
-  onMarkerClick = (props, marker, e) =>
-    this.setState({
-      selectedPlace: props,
-      activeMarker: marker,
-      showingInfoWindow: true
-    });
+  componentDidMount() {
+    this.loadData();
+    this.checkCenter(this.state.data.lati, this.state.data.long);
+    setInterval(this.loadData, 8000);
+    setInterval(this.checkCenter, 8000);
+    console.info('LOADED!');
+  }
+  
+  loadData = () => {
+    api.getData()
+    .then((data) => {
+      this.setState({data: data});
+    })
+    console.info(`Updated data.`)
+  }
 
-  onClose = props => {
-    if (this.state.showingInfoWindow) {
-      this.setState({
-        showingInfoWindow: false,
-        activeMarker: null
-      });
-    }
-  };
+  checkCenter = () => {
+    if(this.state.data.lati - this.state.center.lat > 0.001) {
+         console.log("Change center");
+         this.setState({
+           center: {
+             lat: this.state.data.lati,
+             lng: this.state.data.long,
+            }
+         })
+       };
+  }
 
   render() {
     return (
-      <Map
-        google={this.props.google}
-        zoom={18}
-        style={mapStyles}
-        initialCenter={{
-         lat: api.getData().lat,
-         lng: api.getData().lng
-        }}
-      >
-        <Marker
-        onClick={this.onMarkerClick}
-        name={'Current Position'}
+      <div className="App">
+        <Maps
+          lat = {this.state.data.lati}
+          lng = {this.state.data.long}
+          center = {this.state.center}
         />
-        <InfoWindow
-          marker={this.state.activeMarker}
-          visible={this.state.showingInfoWindow}
-          onClose={this.onClose}
-        >
-          <div>
-            <h4>{this.state.selectedPlace.name}</h4>
-          </div>
-        </InfoWindow>
-      </Map>
+      </div>
     );
   }
 }
 
-export default GoogleApiWrapper({
-  apiKey: `${API_KEY}`
-})(MapContainer);
+export default App;
