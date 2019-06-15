@@ -37,15 +37,15 @@ export class MapContainer extends Component {
       <Map
         google={this.props.google}
         clickableIcons={true}
-        zoom={15.5}
+        zoom={16}
         style={mapStyles}
         initialCenter={this.props.center}
         center={this.props.center}
       >
         <Marker
-        onClick={this.onMarkerClick}
-        name={'Current Position'}
-        position={{ lat: this.props.lat, lng: this.props.lng }}
+          onClick={this.onMarkerClick}
+          name={'Current Position'}
+          position={{ lat: this.props.lat, lng: this.props.lng }}
         />
         <InfoWindow
           marker={this.state.activeMarker}
