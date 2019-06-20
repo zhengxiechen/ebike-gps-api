@@ -6,7 +6,8 @@ const API_KEY = process.env.REACT_APP_API_KEY;
 
 const mapStyles = {
   width: '100%',
-  height: '100%'
+  height: '100%',
+  //position: 'relative'
 };
 
 export class MapContainer extends Component {
@@ -39,6 +40,7 @@ export class MapContainer extends Component {
         clickableIcons={true}
         zoom={16}
         style={mapStyles}
+        //style={this.props.containerStyle}
         initialCenter={this.props.center}
         center={this.props.center}
       >

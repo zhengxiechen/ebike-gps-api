@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import MockApi from './api/__mocks__/mock_api.js';
 import GPSApi from './api/gps_api.js';
 import Maps from './MapContainer';
+import './App.css';
 
 require('dotenv').config();
 const API_KEY = process.env.REACT_APP_API_KEY;
@@ -21,8 +22,8 @@ class App extends Component {
   componentDidMount() {
     this.loadData();
     this.checkCenter(this.state.data.lat, this.state.data.lng);
-    setInterval(this.loadData, 10000);
-    setInterval(this.checkCenter, 10000);
+    //setInterval(this.loadData, 10000);
+    //setInterval(this.checkCenter, 10000);
     console.info('LOADED!');
   }
   
@@ -63,11 +64,24 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Maps
-          lat = {this.state.data.lat}
-          lng = {this.state.data.lng}
-          center = {this.state.center}
-        />
+        <div id="container">
+          <Maps
+            lat = {this.state.data.lat}
+            lng = {this.state.data.lng}
+            center = {this.state.center}
+          />
+        </div>
+        <div id="dataDisplay">
+          <h2>
+          latitude: {this.state.data.lat} <br/>
+          longitude: {this.state.data.lng}  <br/>
+          course: {this.state.data.cou} <br/>
+          speed: {this.state.data.spd}  <br/>
+          altitude: {this.state.data.alt} <br/>
+          voltage: {this.state.data.vol}  <br/>
+          current: {this.state.data.cur}  <br/>
+          </h2>
+        </div>
       </div>
     );
   }
