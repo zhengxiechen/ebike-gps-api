@@ -1,18 +1,33 @@
 import React, { Component } from 'react';
-import MockApi from './api/__mocks__/mock_api.js';
 import GPSApi from './api/gps_api.js';
-import Maps from './MapContainer';
+import MapContainer from './MapContainer';
+import { Sidebar } from './Sidebar';
 import './App.css';
+import { Fab, CssBaseline } from '@material-ui/core';
+import { Menu } from '@material-ui/icons'
 
 require('dotenv').config();
-const API_KEY = process.env.REACT_APP_API_KEY;
-//const api = new MockApi();
 const api = new GPSApi();
+
+// Prevent Heroku Deploy from Sleeping
+var http = require("http");
+setInterval(function() {
+    http.get("https://cors-anywhere.herokuapp.com/http://ebike-gps.herokuapp.com");
+}, 300000); // every 5 minutes (300000)
 
 class App extends Component {
   state = {
-    data: { lat: 38.990794, lng: -76.936972 },
+    data: { 
+      lat: 38.990794, 
+      lng: -76.936972,
+      cou: 42,
+      spd: 30.5,
+      alt: 174,
+      vol:49,
+      cur: 0.0
+    },
     center: { lat: 38.990794, lng: -76.936972 },
+    showSidebar: true,
   };
 
   componentWillMount() {
@@ -22,9 +37,12 @@ class App extends Component {
   componentDidMount() {
     this.loadData();
     this.checkCenter(this.state.data.lat, this.state.data.lng);
-    //setInterval(this.loadData, 10000);
-    //setInterval(this.checkCenter, 10000);
-    console.info('LOADED!');
+    setInterval(this.loadData, 5000);
+    setInterval(this.checkCenter, 5000);
+  }
+
+  handleToggle() {
+    this.setState({ showSidebar: !this.state.showSidebar })
   }
   
   firstLoadData = () => {
@@ -63,25 +81,23 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <div id="container">
-          <Maps
+      <div className="root">
+        <CssBaseline/>
+        <div className="mapContainer">
+          <MapContainer
             lat = {this.state.data.lat}
             lng = {this.state.data.lng}
             center = {this.state.center}
+            showSidebar = {this.state.showSidebar}
           />
+          <Fab 
+            color="primary"
+            style={{ position: 'absolute', right: 2, top: 55 }} 
+            onClick={() => this.handleToggle()}> 
+            <Menu /> 
+          </Fab>
         </div>
-        <div id="dataDisplay">
-          <h2>
-          latitude: {this.state.data.lat} <br/>
-          longitude: {this.state.data.lng}  <br/>
-          course: {this.state.data.cou} <br/>
-          speed: {this.state.data.spd}  <br/>
-          altitude: {this.state.data.alt} <br/>
-          voltage: {this.state.data.vol}  <br/>
-          current: {this.state.data.cur}  <br/>
-          </h2>
-        </div>
+        { this.state.showSidebar ? <Sidebar data={this.state.data}/> : null }
       </div>
     );
   }

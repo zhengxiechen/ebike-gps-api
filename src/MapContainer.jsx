@@ -5,10 +5,9 @@ require('dotenv').config();
 const API_KEY = process.env.REACT_APP_API_KEY;
 
 const mapStyles = {
-  width: '100%',
-  height: '100%',
-  //position: 'relative'
-};
+    height: '100%',
+    width: '100%',
+  };
 
 export class MapContainer extends Component {
   state = {
@@ -40,7 +39,6 @@ export class MapContainer extends Component {
         clickableIcons={true}
         zoom={16}
         style={mapStyles}
-        //style={this.props.containerStyle}
         initialCenter={this.props.center}
         center={this.props.center}
       >

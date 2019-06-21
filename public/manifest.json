@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "E-Bike GPS",
+  "name": "E-Bike GPS Data on Google Map",
   "icons": [
     {
       "src": "favicon.ico",
