@@ -9,12 +9,6 @@ import { Menu } from '@material-ui/icons'
 require('dotenv').config();
 const api = new GPSApi();
 
-// Prevent Heroku Deploy from Sleeping
-var http = require("http");
-setInterval(function() {
-    http.get("https://cors-anywhere.herokuapp.com/http://ebike-gps.herokuapp.com");
-}, 300000); // every 5 minutes (300000)
-
 class App extends Component {
   state = {
     data: { 
