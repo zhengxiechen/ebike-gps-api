@@ -31,8 +31,8 @@ class App extends Component {
   componentDidMount() {
     this.loadData();
     this.checkCenter(this.state.data.lat, this.state.data.lng);
-    setInterval(this.loadData, 5000);
-    setInterval(this.checkCenter, 5000);
+    setInterval(this.loadData, 10000);
+    setInterval(this.checkCenter, 10000);
   }
 
   handleToggle() {
