@@ -18,6 +18,7 @@ export class GPSApi {
         } catch(error){
             console.warn(error);
         }
+        console.info(`Updated data.`);
         return data;
     }
 }

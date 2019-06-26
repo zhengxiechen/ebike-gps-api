@@ -14,11 +14,6 @@ class App extends Component {
     data: { 
       lat: 38.990794, 
       lng: -76.936972,
-      cou: 42,
-      spd: 30.5,
-      alt: 174,
-      vol:49,
-      cur: 0.0
     },
     center: { lat: 38.990794, lng: -76.936972 },
     showSidebar: true,
@@ -31,8 +26,8 @@ class App extends Component {
   componentDidMount() {
     this.loadData();
     this.checkCenter(this.state.data.lat, this.state.data.lng);
-    setInterval(this.loadData, 10000);
-    setInterval(this.checkCenter, 10000);
+    setInterval(this.loadData, 15000);
+    setInterval(this.checkCenter, 15000);
   }
 
   handleToggle() {
@@ -50,7 +45,6 @@ class App extends Component {
         }
       });
     })
-    console.info(`Loaded data.`)
   }
 
   loadData = () => {
@@ -58,7 +52,6 @@ class App extends Component {
     .then((data) => {
       this.setState({data: data});
     })
-    console.info(`Updated data.`)
   }
 
   checkCenter = () => {
