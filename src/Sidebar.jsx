@@ -20,11 +20,12 @@ export class Sidebar extends Component {
         const dataPoints = [
             { label: "latitude" , value: data.lat },
             { label: "longitude" , value: data.lng },  
-            { label: "course" , value: data.cou },
-            { label: "speed" , value: data.spd },  
-            { label: "altitude" , value: data.alt },
-            { label: "voltage" , value: data.vol },  
-            { label: "current" , value: data.cur }
+            { label: "course (°)" , value: data.cou },
+            { label: "speed (m/s)" , value: data.spd },  
+            { label: "altitude (m)" , value: data.alt },
+            { label: "voltage (V)" , value: data.vol },  
+            { label: "current (A)" , value: data.cur },
+            { label: "temperature (°C)" , value: data.tmp }
         ];
 
         return (
