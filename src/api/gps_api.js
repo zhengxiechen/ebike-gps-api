@@ -1,7 +1,6 @@
 require('dotenv').config();
 const GET_URL = process.env.REACT_APP_GET_URL;
-const proxyurl = "https://cors-anywhere.herokuapp.com/";
-const url = proxyurl + GET_URL;
+const url = GET_URL;
 
 export class GPSApi {
     getData() {
